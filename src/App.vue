@@ -23,7 +23,7 @@
 
     </v-navigation-drawer>
   <!-- dark permet de passer le texte en blanc pour qu'il soit plus lisible -->
- <v-toolbar dark class="blue lighten-1">
+ <v-toolbar dark class="error">
   <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-toolbar-side-icon>
   <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">DevMeetup</router-link> </v-toolbar-title>
   <!-- pour mettre un espace entre le titre et le bouton  -->
