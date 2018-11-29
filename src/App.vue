@@ -6,25 +6,26 @@
       app>
 
       <v-list>
-        <v-list-tile>
+        <!-- tile est une ligne dans la liste le v-for permet de réccupérer les icones de façon dynamique -->
+        <v-list-tile v-for="item in menuItems" :key="item.title"> 
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
-            <v-list-tile-content>View Meetups</v-list-tile-content>
+            <v-list-tile-content>{{ item.title }}</v-list-tile-content>
         </v-list-tile>
       </v-list>
 
     </v-navigation-drawer>
-
- <v-toolbar>
+  <!-- dark permet de passer le texte en blanc pour qu'il soit plus lisible -->
+ <v-toolbar dark class="blue lighten-1">
   <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-toolbar-side-icon>
   <v-toolbar-title>DevMeetup</v-toolbar-title>
-  
+  <!-- pour mettre un espace entre le titre et le bouton  -->
   <v-spacer></v-spacer>
   <v-toolbar-items class="hidden-xs-only">
-    <v-btn flat>
-      <v-icon left>people</v-icon>
-      Vue Meetups</v-btn>
+    <v-btn flat v-for="item in menuItems" :key="item.title">
+      <v-icon left>{{ item.icon }}</v-icon>
+      {{ item.title }}</v-btn>
   </v-toolbar-items>
 </v-toolbar>
 
@@ -45,7 +46,14 @@
 export default {
   data(){
     return {
-      drawer: true
+      drawer: false,
+      menuItems:[ 
+      {icon: 'people', title: 'View Meetups'},
+      {icon: 'room', title: 'Organize Meetup'},
+      {icon: 'person', title: 'Profile'},
+      {icon: 'face', title: 'Sign up'},
+      {icon: 'lock_open', title: 'Sign in'}
+      ]
     }
   }
 }
