@@ -1,13 +1,19 @@
 <template>
 <v-app>
+  <!-- temporary pour que le drawer ne s ouvre pas à chaque lien cliqué -->
+  <!-- router pour utiliser le router et :to pour lui dire à quoi le lier -->
     <v-navigation-drawer
+
       v-model="drawer"
+      temporary
       fixed
-      app>
+      app
+      >
 
       <v-list>
         <!-- tile est une ligne dans la liste le v-for permet de réccupérer les icones de façon dynamique -->
-        <v-list-tile v-for="item in menuItems" :key="item.title"> 
+        <v-list-tile v-for="item in menuItems" :key="item.title" router
+      :to="item.link" > 
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -19,25 +25,26 @@
   <!-- dark permet de passer le texte en blanc pour qu'il soit plus lisible -->
  <v-toolbar dark class="blue lighten-1">
   <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-toolbar-side-icon>
-  <v-toolbar-title>DevMeetup</v-toolbar-title>
+  <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">DevMeetup</router-link> </v-toolbar-title>
   <!-- pour mettre un espace entre le titre et le bouton  -->
   <v-spacer></v-spacer>
   <v-toolbar-items class="hidden-xs-only">
-    <v-btn flat v-for="item in menuItems" :key="item.title">
+    <v-btn flat v-for="item in menuItems" :key="item.title" router
+      :to="item.link">
       <v-icon left>{{ item.icon }}</v-icon>
       {{ item.title }}</v-btn>
   </v-toolbar-items>
 </v-toolbar>
 
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout
-
+      <!-- <v-container fluid fill-height> -->
+        <v-layout>
+          <router-view></router-view>
         </v-layout>
-      </v-container>
+      <!-- </v-container> -->
     </v-content>
     <v-footer color="indigo" app>
-      <span class="white--text">&copy; 2017</span>
+      <span class="white--text">&copy; 2018</span>
     </v-footer>
 </v-app>
 </template>
@@ -48,11 +55,11 @@ export default {
     return {
       drawer: false,
       menuItems:[ 
-      {icon: 'people', title: 'View Meetups'},
-      {icon: 'room', title: 'Organize Meetup'},
-      {icon: 'person', title: 'Profile'},
-      {icon: 'face', title: 'Sign up'},
-      {icon: 'lock_open', title: 'Sign in'}
+      {icon: 'people', title: 'View Meetups', link: '/meetups'},
+      {icon: 'room', title: 'Organize Meetup', link: '/meetup/new'},
+      {icon: 'person', title: 'Profile', link: '/profile'},
+      {icon: 'face', title: 'Sign up', link: '/signup'},
+      {icon: 'lock_open', title: 'Sign in', link: '/signin'}
       ]
     }
   }
