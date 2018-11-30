@@ -41,7 +41,8 @@
         </v-layout>
       <!-- </v-container> -->
     </v-content>
-    <v-footer color="indigo" app>
+    <v-footer color="error" app>
+
       <span class="white--text">&copy; 2018</span>
     </v-footer>
 </v-app>
@@ -73,4 +74,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
