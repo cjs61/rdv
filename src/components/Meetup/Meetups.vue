@@ -7,7 +7,7 @@
               <v-layout row>
                   <v-flex xs5 sm4 md3>
                         <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            src='https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
                             height="130px">
                         </v-card-media>
                     </v-flex>
@@ -21,8 +21,8 @@
         </v-card-title>
     
         <v-card-actions>
-          <v-btn flat class="bt" to="">
-              <v-icon left>arrow_forward</v-icon>
+          <v-btn flat class="bt" to="/meetup/1">
+              <v-icon left light>arrow_forward</v-icon>
               VIEW MEETUP
         </v-btn>
           

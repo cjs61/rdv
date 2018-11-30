@@ -7,7 +7,7 @@
                         <h4 class="primary--text">My Meetup</h4>
                     </v-card-title>
                     <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            src='https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
                             height="400px">
                         </v-card-media>
                         <v-card-text>
@@ -16,10 +16,10 @@
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem nisi reprehenderit deleniti eaque fugit est quod quasi accusamus incidunt corrupti cum expedita facilis magni, eius, nihil eos inventore dolorum assumenda, quisquam fuga adipisci provident nesciunt. Tempore quae quisquam libero explicabo?
                             </div>
                         </v-card-text>
-                        <v-card-action>
+                        <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn dark class="error">Register</v-btn>
-                        </v-card-action>
+                        </v-card-actions>
                 </v-card>
             </v-flex>
         </v-layout>

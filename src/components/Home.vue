@@ -19,7 +19,8 @@
                 <v-carousel-item
                     v-for="meetup in meetups"
                     :src="meetup.imageUrl"
-                    :key="meetup.id">
+                    :key="meetup.id"
+                    @click="onLoadMeetup(meetup.id)">
                     <div class="title">
                         {{meetup.title}}
                     </div>
@@ -44,11 +45,16 @@
     data () {
       return {
         meetups: [
-            { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg', id: 'aze', title: 'Meetup in New York' },
+            { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg', id: '1', title: 'Meetup in New York' },
             { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', id: 'poi', title: 'Meetup in Paris' }
          
         ]
       }
+    },
+    methods: {
+        onLoadMeetup (id) {
+            this.$router.push('/meetup/' + id)
+        }
     }
   }
 </script>
