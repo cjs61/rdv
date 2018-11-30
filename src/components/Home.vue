@@ -42,15 +42,11 @@
 
 <script>
   export default {
-    data () {
-      return {
-        meetups: [
-            { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg', id: '1', title: 'Meetup in New York' },
-            { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', id: 'poi', title: 'Meetup in Paris' }
-         
-        ]
-      }
-    },
+computed: {
+    meetups () {
+        return this.$store.getters.featuredMeetups
+    }
+},
     methods: {
         onLoadMeetup (id) {
             this.$router.push('/meetup/' + id)
