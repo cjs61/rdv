@@ -2,12 +2,12 @@
 <v-container>
 <v-layout row wrap>
     <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-      <v-card class="info">
+      <v-card class="info" v-for="meetup in meetups" :key="meetup.id">
           <v-container fluid>
               <v-layout row>
                   <v-flex xs5 sm4 md3>
                         <v-card-media
-                            src='https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
+                            :src="meetup.imageUrl"
                             height="130px">
                         </v-card-media>
                     </v-flex>
@@ -15,8 +15,9 @@
     <v-flex xs7 sm8 md9>
         <v-card-title primary-title>
             <div>
-                <h3 class="white--text mb-0">My Meetup</h3>
-                <div>18 novembre 2018</div>
+                <!-- une fois que j'ai fais la boucle sur ma card je peux remplacer My Meetup par {{...}} -->
+                <h3 class="white--text mb-0">{{ meetup.title }} </h3>
+                <div>{{ meetup.date }}</div>
             </div>
         </v-card-title>
     
@@ -40,7 +41,11 @@
 </template>
 <script>
 export default {
-    
+    computed: {
+        meetups () {
+            return this.$store.getters.loadedMeetups
+        }
+    }
 }
 </script>
 <style>
