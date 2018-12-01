@@ -1,8 +1,8 @@
 <template>
 <v-container>
-<v-layout row wrap>
+<v-layout row wrap v-for="meetup in meetups" :key="meetup.id" class="margin mb-2">
     <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-      <v-card class="info" v-for="meetup in meetups" :key="meetup.id">
+      <v-card class="info">
           <v-container fluid>
               <v-layout row>
                   <v-flex xs5 sm4 md3>
@@ -22,7 +22,7 @@
         </v-card-title>
     
         <v-card-actions>
-          <v-btn flat class="bt" to="/meetup/1">
+          <v-btn flat class="bt" :to="'/meetup/' + meetup.id">
               <v-icon left light>arrow_forward</v-icon>
               VIEW MEETUP
         </v-btn>
@@ -43,6 +43,7 @@
 export default {
     computed: {
         meetups () {
+            // ici j'appelle la fonction en temps que propriété donc pas de ()
             return this.$store.getters.loadedMeetups
         }
     }

@@ -4,10 +4,10 @@
             <v-flex xs 12>
                 <v-card>
                     <v-card-title>
-                        <h4 class="primary--text">My Meetup</h4>
+                        <h4 class="primary--text">{{meetup.title}}</h4>
                     </v-card-title>
                     <v-card-media
-                            src='https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
+                            :src="meetup.imageUrl"
                             height="400px">
                         </v-card-media>
                         <v-card-text>
@@ -25,3 +25,15 @@
         </v-layout>
     </v-container>
 </template>
+<script>
+export default {
+    // j'ai besoin de réccupérer l'id du meetup ; ne pas oublier d'ajouter props: true à index de router
+    props: ['id'],
+    computed: {
+        meetup () {
+            return this.$store.getters.loadedMeetup(this.id)
+        }
+    }
+}
+</script>
+
