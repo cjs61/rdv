@@ -22,7 +22,7 @@
         </v-card-title>
     
         <v-card-actions>
-          <v-btn flat class="bt" :to="'/meetup/' + meetup.id">
+          <v-btn flat class="bt" :to="'/meetups/' + meetup.id">
               <v-icon left light>arrow_forward</v-icon>
               VIEW MEETUP
         </v-btn>
