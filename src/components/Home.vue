@@ -9,6 +9,7 @@
         </v-flex>
         
         <v-flex xs12 sm6 class="text-xs-center text-sm-left">
+            <!-- pas de s à /meetups dans le tuto ? -->
             <v-btn large router to="/meetup/new" class="info">Organise Meetups</v-btn>
         </v-flex>
     </v-layout>
@@ -49,7 +50,7 @@ computed: {
 },
     methods: {
         onLoadMeetup (id) {
-            this.$router.push('/meetup/' + id)
+            this.$router.push('/meetups/' + id)
         }
     }
   }

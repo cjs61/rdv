@@ -24,12 +24,12 @@ export default new Router({
       component: Meetups
     },
     {
-    path: '/meetups/new',
-      name: 'CreateMeetup',
-      component: CreateMeetup
+    path: '/meetup/new',
+    name: 'CreateMeetup',
+    component: CreateMeetup
     },
     { 
-    path: '/meetup/:id',
+    path: '/meetups/:id',
     name: 'Meetup',
     props: true,
     component: Meetup
