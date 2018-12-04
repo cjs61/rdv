@@ -93,15 +93,18 @@ export default {
     methods: {
         // je crée un objet javascript qui contient/stock/store toutes les données stockées dans les datas
         onCreateMeetup () {
+            if(!this.formIsValid){
+                return
+            }
             const MeetupData = {
                 title: this.title,
                 location: this.location,
                 imageUrl: this.imageUrl,
                 description: this.description,
                 date: new Date()
-
             }
             this.$store.dispatch('createMeetup', MeetupData)
+            this.$router.push('/meetups')
         }
     }
 }
