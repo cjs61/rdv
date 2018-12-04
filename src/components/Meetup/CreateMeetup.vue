@@ -7,7 +7,7 @@
         </v-layout> 
         <v-layout row>
             <v-flex xs12>
-                <form>
+                <form @submit.prevent="onCreateMeetup">
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
                             <v-text-field
@@ -24,7 +24,7 @@
                             <v-text-field
                                 name="location"
                                 label="Location"
-                                id="Location"
+                                id="location"
                                 v-model="location"
                                 required>
                             </v-text-field>
@@ -33,34 +33,36 @@
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
                             <v-text-field
-                                name="imageURL"
-                                label="ImageURL"
-                                id="Image-URL"
-                                v-model="imageURL"
+                                name="imageUrl"
+                                label="ImageUrl"
+                                id="image-Url"
+                                v-model="imageUrl"
                                 required>
                             </v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <img :src="imageURL">
+                            <img :src="imageUrl" height="150px">
                         </v-flex>
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-text-field
+                            <v-textarea
                                 name="description"
                                 label="Description"
-                                id="Description"
-                                multi-line
+                                id="description"
                                 v-model="description"
                                 required>
-                            </v-text-field>
+                            </v-textarea>
                         </v-flex>
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-btn class="primary">Create Meetup</v-btn>
+                            <v-btn class="primary" 
+                            :disabled="!formIsValid"
+                            type="submit">Create Meetup
+                            </v-btn>
                         </v-flex>
                     </v-layout>
                 </form>
@@ -75,9 +77,31 @@ export default {
         return {
             title: '',
             location: '',
-            imageURL: '',
+            imageUrl: '',
             description: ''
 
+        }
+    },
+    computed: {
+        formIsValid () {
+            return this.title !== '' &&
+                this.location !== '' &&
+                this.imageUrl !== '' &&
+                this.description !== '' 
+        }
+    },
+    methods: {
+        // je crée un objet javascript qui contient/stock/store toutes les données stockées dans les datas
+        onCreateMeetup () {
+            const MeetupData = {
+                title: this.title,
+                location: this.location,
+                imageUrl: this.imageUrl,
+                description: this.description,
+                date: new Date()
+
+            }
+            this.$store.dispatch('createMeetup', MeetupData)
         }
     }
 }

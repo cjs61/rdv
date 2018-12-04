@@ -23,8 +23,27 @@ export const store = new Vuex.Store({
             registeredMeetups: ['fdsgh']
         }
     },
-    mutations: {},
-    actions: {},
+    mutations: {
+        createMeetup (state, payload) {
+            state.loadedMeetups.push(payload)
+        }
+    },
+    actions: {
+        // j'aurai pu prendre payload comme objet et le mettre au dessus avec payload mais cela permet de voir une autre méthode
+        createMeetup ({commit}, payload){
+            const meetup = {
+                title: payload.title,
+                location: payload.location,
+                imageUrl: payload.imageUrl,
+                description: payload.description,
+                date: payload.date,
+                // temporairement car l'id sera autoincrémenté dans la bdd
+                id:'mon_id_temporaire'
+            }
+            // reach firebase and store it
+            commit('createMeetup', meetup)
+        }
+    },
     getters: {
         loadedMeetups (state){
             return state.loadedMeetups.sort((meetupA, meetupB) => {
