@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
 import {store} from './store'
+import DateFilter from './filters/date'
 
 import 'vuetify/dist/vuetify.min.css';
 import router from './router'
@@ -11,6 +12,7 @@ import router from './router'
 Vue.config.productionTip = false
 Vue.use(Vuetify);
 
+Vue.filter('date', DateFilter)
 
 /* eslint-disable no-new */
 new Vue({
