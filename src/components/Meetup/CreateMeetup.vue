@@ -90,6 +90,8 @@
 </template>
 
 <script>
+
+import moment from 'moment'
   export default {
     data () {
       return {
@@ -103,6 +105,11 @@
         
       }
     },
+    created: function () {
+    const dateTime = moment()
+    this.date = dateTime.format('YYYY-MM-DD').toString()
+    this.time = dateTime.format('HH:mm').toString()
+   },
     computed: {
       formIsValid () {
         return this.title !== '' &&
@@ -136,6 +143,7 @@
           location: this.location,
           imageUrl: this.imageUrl,
           description: this.description,
+          date: this.submittableDateTime
           
         
         }
