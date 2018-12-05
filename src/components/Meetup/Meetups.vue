@@ -17,7 +17,7 @@
             <div>
                 <!-- une fois que j'ai fais la boucle sur ma card je peux remplacer My Meetup par {{...}} -->
                 <h3 class="white--text mb-0">{{ meetup.title }} </h3>
-                <div>{{ meetup.date }}</div>
+                <div>{{ meetup.date | date }}</div>
             </div>
         </v-card-title>
     

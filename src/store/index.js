@@ -9,12 +9,12 @@ export const store = new Vuex.Store({
             { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg', 
                 id: 'aze', 
                 title: 'Meetup in New York',
-                date: '2018-11-28'
+                date: new Date()
             },
             { imageUrl: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', 
                 id: 'poi', 
                 title: 'Meetup in Paris',
-                date: '2018-11-29' 
+                date: new Date() 
             }
          
         ],
