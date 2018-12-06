@@ -20,7 +20,7 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
   created () {
     firebase.initializeApp({    
     apiKey: "AIzaSyCs_OGJ_PsTUXrpvTSMzWxgl20T9rIcPpg",
