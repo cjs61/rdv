@@ -7,6 +7,7 @@
                         <!-- création d'une grid -->
                         <v-container>
                             <!-- j'enlève action= car je ne veux pas envoyer de request -->
+                            <!-- je ne mets pas les parenthèses à onSignup car seul un pointer suffit -->
                             <form @submit.prevent="onSignup">
                                 <v-layout row>
                                     <v-flex xs12>
@@ -78,7 +79,7 @@ export default {
     methods: {
         onSignup () {
         // vuex
-        console.log({email: this.email, password: this.password, confirmPassword: this.confirmPassword })
+        this.$store.dispatch('signUserUp', {email: this.email, password: this.password })
         }
     }
     

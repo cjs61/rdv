@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+// utilisation du sdk firebase
+import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -18,14 +20,17 @@ export const store = new Vuex.Store({
             }
          
         ],
-        user: {
-            id: 'ruoie',
-            registeredMeetups: ['fdsgh']
-        }
+        // pour ne pas commmencer l'application avec une utilisateur
+        user: null
     },
     mutations: {
         createMeetup (state, payload) {
             state.loadedMeetups.push(payload)
+        },
+        // pour recevoir un objet payload avec un id et un registeredMeetup
+        setUser (state, payload) {
+            // je réécris ou set le user avec le payload
+            state.user = payload
         }
     },
     actions: {
@@ -42,6 +47,27 @@ export const store = new Vuex.Store({
             }
             // reach firebase and store it
             commit('createMeetup', meetup)
+        },
+        // un objet pour extraction de la méthode commit et un payload avec password et email
+        signUserUp ({commit}, payload) {
+            firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+            .then (
+                // je stocke ce nouvel utilisateur
+                user => {
+                    // le user que je réccupère de firebase a un format différent de id et registeredMeetups car il non encore enregistré donc je créé une constante nouvel utilisateur avec un id unique
+                    const newUser = {
+                        id: user.uid,
+                        registeredMeetup: []
+                    }
+                    commit('setUser', newUser)
+                }
+            )
+            // attrapper les erreurs
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
         }
     },
     getters: {
@@ -59,6 +85,9 @@ export const store = new Vuex.Store({
                     return meetup.id === meetupId
                 })
             }
+        },
+        user (state) {
+            return state.user
         }
     }
 

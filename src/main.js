@@ -23,11 +23,11 @@ new Vue({
   render: h => h(App),
   created () {
     firebase.initializeApp({    
-    apiKey: "AIzaSyCs_OGJ_PsTUXrpvTSMzWxgl20T9rIcPpg",
-    authDomain: "devmeetup-1e9a1.firebaseapp.com",
-    databaseURL: "https://devmeetup-1e9a1.firebaseio.com",
-    projectId: "devmeetup-1e9a1",
-    storageBucket: "devmeetup-1e9a1.appspot.com",
+    apiKey: 'AIzaSyCs_OGJ_PsTUXrpvTSMzWxgl20T9rIcPpg',
+    authDomain: 'devmeetup-1e9a1.firebaseapp.com',
+    databaseURL: 'https://devmeetup-1e9a1.firebaseio.com',
+    projectId: 'devmeetup-1e9a1',
+    storageBucket: 'devmeetup-1e9a1.appspot.com'
     })
   }
 })
