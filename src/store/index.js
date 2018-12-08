@@ -87,6 +87,7 @@ export const store = new Vuex.Store({
             }
         },
         user (state) {
+            // je retourne mom user de vuex store
             return state.user
         }
     }
