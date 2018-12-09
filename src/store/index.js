@@ -68,6 +68,23 @@ export const store = new Vuex.Store({
                     console.log(error)
                 }
             )
+        },
+        signUserIn ({commit}, payload) {
+            firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+                .then (
+                    user => {
+                        const newUser = {
+                            id: user.id,
+                            registeredMeetups: []
+                        }
+                        commit('setUser', newUser)
+                    }
+                )
+                .catch(
+                    error => {
+                        console.log(error)
+                    }
+                )
         }
     },
     getters: {
@@ -87,6 +104,7 @@ export const store = new Vuex.Store({
             }
         },
         user (state) {
+            // je retourne mom user de vuex store
             return state.user
         }
     }

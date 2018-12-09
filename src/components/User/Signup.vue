@@ -74,6 +74,21 @@ export default {
     computed: {
         comparePasswords () {
             return this.password !== this.confirmPassword ? 'Password incorrect' : true
+        },
+        user () {
+            // je renvoie le user que je viens de créer
+            return this.$store.getters.user
+        }
+    },
+    // regarde le user computed propriété
+    watch: {
+        // je stocke une valeur à chaque fois que le statut du user change
+        user (value) {
+            // je vérifie si le user existe
+            if (value !== null && value !== undefined) {
+                // je redirige vers la home page
+                this.$router.push('/')
+            }
         }
     },
     methods: {

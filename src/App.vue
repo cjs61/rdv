@@ -50,21 +50,34 @@
 </template>
 
 <script>
-export default {
-  data(){
-    return {
-      drawer: false,
-
-      menuItems:[ 
-      {icon: 'people', title: 'View Meetups', link: '/meetups'},
-      {icon: 'room', title: 'Organize Meetup', link: '/meetup/new'},
-      {icon: 'person', title: 'Profile', link: '/profile'},
-      {icon: 'face', title: 'Sign up', link: '/signup'},
-      {icon: 'lock_open', title: 'Sign in', link: '/signin'}
-      ]
+    export default {
+        data(){
+            return {
+                drawer: false,
+            }
+        },
+        computed: {
+            // j'ajuste le menu en fonction de l'authentification
+            menuItems () {
+                let menuItems = [ 
+                    {icon: 'face', title: 'Sign up', link: '/signup'},
+                    {icon: 'lock_open', title: 'Sign in', link: '/signin'}
+                ]
+                // ici userIsAuthenticated n'est pas utilisé comme une méthode mais comme une propriété
+                if (this.userIsAuthenticated) {
+                    menuItems = [
+                        {icon: 'people', title: 'View Meetups', link: '/meetups'},
+                        {icon: 'room', title: 'Organize Meetup', link: '/meetup/new'},
+                        {icon: 'person', title: 'Profile', link: '/profile'},
+                    ]
+                }
+                return menuItems
+            },
+            userIsAuthenticated () {
+                return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+            }
+        }
     }
-  }
-}
 </script>
 
 <style>
