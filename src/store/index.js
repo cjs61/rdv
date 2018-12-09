@@ -21,7 +21,9 @@ export const store = new Vuex.Store({
          
         ],
         // pour ne pas commmencer l'application avec une utilisateur
-        user: null
+        user: null,
+        loading: false,
+        error: null
     },
     mutations: {
         createMeetup (state, payload) {
@@ -31,6 +33,15 @@ export const store = new Vuex.Store({
         setUser (state, payload) {
             // je réécris ou set le user avec le payload
             state.user = payload
+        },
+        setLoading (state, payload) {
+            state.loading = payload
+        },
+        setError (state, payload) {
+            state.error = payload
+        },
+        clearError (state) {
+            state.error = null
         }
     },
     actions: {
@@ -50,10 +61,13 @@ export const store = new Vuex.Store({
         },
         // un objet pour extraction de la méthode commit et un payload avec password et email
         signUserUp ({commit}, payload) {
+            commit('setLoading', true)
+            commit('clearError')
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
             .then (
                 // je stocke ce nouvel utilisateur
                 user => {
+                    commit('setLoading', false)
                     // le user que je réccupère de firebase a un format différent de id et registeredMeetups car il non encore enregistré donc je créé une constante nouvel utilisateur avec un id unique
                     const newUser = {
                         id: user.uid,
@@ -65,14 +79,19 @@ export const store = new Vuex.Store({
             // attrapper les erreurs
             .catch(
                 error => {
+                    commit('setLoading', true)
+                    commit('setError', error)
                     console.log(error)
                 }
             )
         },
         signUserIn ({commit}, payload) {
+            commit('setLoading', true)
+            commit('clearError')
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 .then (
                     user => {
+                        commit('setLoading', false)
                         const newUser = {
                             id: user.id,
                             registeredMeetups: []
@@ -82,9 +101,14 @@ export const store = new Vuex.Store({
                 )
                 .catch(
                     error => {
+                        commit('setLoading', false)
+                        commit('setError', error)
                         console.log(error)
                     }
                 )
+        },
+        clearError ({commit}) {
+            commit('clearError')
         }
     },
     getters: {
@@ -106,6 +130,12 @@ export const store = new Vuex.Store({
         user (state) {
             // je retourne mom user de vuex store
             return state.user
+        },
+        loading (state) {
+            return state.loading
+        },
+        error (state) {
+            return state.error
         }
     }
 
