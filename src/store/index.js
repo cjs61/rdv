@@ -53,16 +53,26 @@ export const store = new Vuex.Store({
                 imageUrl: payload.imageUrl,
                 description: payload.description,
                 // j'ajoute toISOString pour pouvoir stocker la date en convertissant l'objet en string
-                date: payload.date.toISOString()
+                date: payload.date.toISOString(),
                 // temporairement car l'id sera autoincrémenté dans la bdd
                 // id:'mon_id_temporaire'
+                
             }
             // j'envoie ma constante ci-dessus dans une node appellée meetups
             firebase.database().ref('meetups').push(meetup)
                 .then((data) => {
-                    console.log(data)
+                    // firebase renvoie un objet particulier
+                 const key = data.key
                     // reach firebase and store it
-                    commit('createMeetup', meetup)
+                    // commit('createMeetup', meetup)
+
+                    //  je commit dans un objet
+                    commit('createMeetup', {
+                        // je prends les propriété du createMeetup
+                        ...meetup,
+                        // j'utilise la valeur key comme id de ce meetup
+                        id: key
+                    })
                 })
                 .catch((error) => {
                     console.log(error)
