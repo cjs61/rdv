@@ -40,7 +40,7 @@
                                 </v-layout>
                                 <v-layout row>
                                      <!-- column car je lie une valeur dynamique -->
-                                    <v-flex>
+                                    <v-flex xs12>
                                         <v-text-field
                                         name="confirmPassword"
                                         label="Confirm Password"
@@ -53,7 +53,7 @@
                                      </v-flex>
                                 </v-layout>
                                 <v-layout>
-                                    <v-flex>
+                                    <v-flex xs12>
                                         <v-btn type="submit" :disabled="loading" :loading="loading">
                                             Sign up
                                             <span slot="loader" class="custom-loader">
