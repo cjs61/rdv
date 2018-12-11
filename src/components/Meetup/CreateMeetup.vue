@@ -28,14 +28,22 @@
                 required></v-text-field>
             </v-flex>
           </v-layout>
+
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
+              <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+             <input 
+             type="file" 
+             style="display: none" 
+             ref="fileInput" 
+             accept="image/*"
+             @change="onFilePicked">
+              <!-- <v-text-field
                 name="imageUrl"
                 label="Image URL"
                 id="image-url"
                 v-model="imageUrl"
-                required></v-text-field>
+                required></v-text-field> -->
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -97,7 +105,8 @@ import moment from 'moment'
         imageUrl: '',
         description: '',
         date: new Date().toISOString(),
-        time: new Date()
+        time: new Date(),
+        image: null
         
         
       }
@@ -134,11 +143,16 @@ import moment from 'moment'
         if (!this.formIsValid) {
           return
         }
+        // cette action ne sera pas faite si l'image est undefined ou nul comme initialement
+        if(!this.image) {
+          return
+        }
        
         const meetupData = {
           title: this.title,
           location: this.location,
-          imageUrl: this.imageUrl,
+          // imageUrl: this.imageUrl, je commente car Ã§a n'est plus une url mais une image
+          image: this.image,
           description: this.description,
           date: this.submittableDateTime
           
@@ -146,7 +160,27 @@ import moment from 'moment'
         }
         this.$store.dispatch('createMeetup', meetupData)
         this.$router.push('/meetups')
+      },
+      onPickFile() {
+        // comme l'input est en style="display: none", il n'apparait pas. je simule donc 
+        // un clique dessus avec le bouton avec la rÃ©fÃ©rence
+        this.$refs.fileInput.click()
+      },
+      onFilePicked (event) {
+        const files = event.target.files
+        let filename = files[0].name
+        // vÃ©rification que le fichier uploadÃ© comporte une extension
+        if(filename.lastIndexOf('.') <= 0) {
+          return alert('Please add a valid file')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+          this.imageUrl = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.image = file[0]
       }
     }
   }
 </script>
+
