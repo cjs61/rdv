@@ -26,6 +26,11 @@ export const store = new Vuex.Store({
         error: null
     },
     mutations: {
+        setLoadedMeetups (state, payload) {
+            // loadedMeetups était le tableau que j'avais fais en dur et accédé au tableau 
+            // que j'ai créé et récupéré (le payload)
+            state.loadedMeetups = payload
+        },
         createMeetup (state, payload) {
             state.loadedMeetups.push(payload)
         },
@@ -45,6 +50,43 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
+        // comme je ne vois que les meetups que je viens de créé et pas tous ceux qui sont dans la BiquadFilterNode, je crée une action
+        // comme je veux tous les meetups je n'ai pas besoin d'un payload
+        loadMeetups ({commit}) {
+            // création d'un loader le temps que les meetups soient chargés ici true puis false
+            commit('setLoading', true)
+            // .on fait référence à un évènement et value à chaque fois que les données 
+            // de la valeur changent (firebase accède automatiquement à un web socket 
+            // que l'on peut renvoyer à chaque fois que les donnés changent)
+            // cependant je n'ai besoin que d'un instantané donc j'utilise .once
+            firebase.database().ref('meetups').once('value')
+            .then((data) => {
+                // stockage de toutes les valeurs (une liste de meetups) que j'ai dans meetups 
+                // dans un tableau
+                const meetups = []
+                // transformation des datas pour les utiliser dans mon appli
+                // val() permet de récupérer les valeurs récupérées dans data
+                // que je stocke dans un objet (dans firebase chaque clé est une propriété 
+                // dans laquelle la valeur de chaque propriété sera un objet avec date, description... )
+                const obj = data.val()
+                // je peux alors utiliser l'objet que j'ai créé
+                for (let key in obj) {
+                    meetups.push({
+                        id: key,
+                        title: obj [key].title,
+                        description: obj [key].description,
+                        imageUrl: obj [key].imageUrl,
+                        date: obj [key].date
+                    })
+                }
+                commit('setLoading', false)
+                commit('setLoadedMeetups', meetups)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+
         // j'aurai pu prendre payload comme objet et le mettre au dessus avec payload mais cela permet de voir une autre méthode
         createMeetup ({commit}, payload){
             const meetup = {
