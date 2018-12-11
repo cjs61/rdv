@@ -76,7 +76,8 @@ export const store = new Vuex.Store({
                         title: obj [key].title,
                         description: obj [key].description,
                         imageUrl: obj [key].imageUrl,
-                        date: obj [key].date
+                        date: obj [key].date,
+                        //creatorId: obj[key].creatorId
                     })
                 }
                 commit('setLoading', false)
@@ -88,6 +89,7 @@ export const store = new Vuex.Store({
         },
 
         // j'aurai pu prendre payload comme objet et le mettre au dessus avec payload mais cela permet de voir une autre méthode
+        //  getters
         createMeetup ({commit}, payload){
             const meetup = {
                 title: payload.title,
@@ -96,7 +98,9 @@ export const store = new Vuex.Store({
                 description: payload.description,
                 // j'ajoute toISOString pour pouvoir stocker la date en convertissant l'objet en string
                 date: payload.date.toISOString(),
-                // temporairement car l'id sera autoincrémenté dans la bdd
+                //creatorId: getters.user.id
+
+                // tempora irement car l'id sera autoincrémenté dans la bdd
                 // id:'mon_id_temporaire'
                 
             }
@@ -132,7 +136,7 @@ export const store = new Vuex.Store({
                     commit('setLoading', false)
                     // le user que je réccupère de firebase a un format différent de id et registeredMeetups car il non encore enregistré donc je créé une constante nouvel utilisateur avec un id unique
                     const newUser = {
-                        id: user.uid,
+                        id: user.id,
                         registeredMeetup: []
                     }
                     commit('setUser', newUser)
