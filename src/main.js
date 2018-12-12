@@ -5,17 +5,23 @@ import * as firebase from 'firebase'
 import {store} from './store'
 import DateFilter from './filters/date'
 import AlertCmp from './components/Shared/Alert.vue'
+import EditMeetupDetailsDialog from './components/Meetup/Edit/EditMeetupDetailsDialog.vue'
 
-import 'vuetify/dist/vuetify.min.css';
+import 'vuetify/dist/vuetify.min.css'
 import router from './router'
 // app.js
-// import './stylus/main.styl';
+// import './stylus/main.styl'
+
 
 Vue.config.productionTip = false
 Vue.use(Vuetify);
 
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
+// j'aurai pu le mettre comme composant local dans Meetup.vue car je ne l'utilise que là
+// mais ici dans main.js il sera un composant global que je peux utiliser dans toute 
+//l'application (ce qui est entre parenthèse est le sélecteur) je n'oubli pas de l'importer
+Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
 
 /* eslint-disable no-new */
 new Vue({

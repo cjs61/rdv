@@ -5,6 +5,13 @@
                 <v-card>
                     <v-card-title>
                         <h4 class="primary--text">{{meetup.title}}</h4>
+                        <!-- je remets ici un template car je ne veux le montrer que s'il s'agit du 
+                        créateur de ce template spécifique donc -->
+                        <template v-if="userIsCreator">
+                            <!-- pour que le bouton soit à gauche et l'icône à droite -->
+                            <v-spacer></v-spacer>
+                            <app-edit-meetup-details-dialog></app-edit-meetup-details-dialog>
+                        </template>
                     </v-card-title>
                     <v-img
                             :src="meetup.imageUrl"
@@ -32,6 +39,18 @@ export default {
     computed: {
         meetup () {
             return this.$store.getters.loadedMeetup(this.id)
+        },
+        // vérifier que le user id correspond au creator id
+        userIsAuthenticated () {
+            return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+        },
+        userIsCreator () {
+            // je n'écris pas userIsAuthenticated() comme une méthode car c'est juste une référence
+            // à la méthode du dessus
+            if(!this.userIsAuthenticated) {
+                return false
+            }
+            return this.$store.getters.user.id === this.meetup.creatorId
         }
     }
 }
