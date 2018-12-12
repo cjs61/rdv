@@ -178,7 +178,7 @@ import moment from 'moment'
           this.imageUrl = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
-        this.image = file[0]
+        this.image = files[0]
       }
     }
   }
