@@ -38,6 +38,7 @@
                     <v-flex xs12>
                         <v-card-actions>
                             <v-btn flat class="blue--text darken-1" @click="editDialog = false">Close</v-btn>
+                            <!-- le bouton a un event listener sur le click qui fait référence à la méthode onSaveChanges -->
                             <v-btn flat class="blue--text darken-1" @click="onSaveChanges">Save</v-btn>
                         </v-card-actions>
                     </v-flex>
@@ -54,18 +55,29 @@ export default {
     data () {
         return {
             editDialog: false,
+            // le v-model du champs va chercher le titre du meetup spécifique
             editedTitle: this.meetup.title,
             editedDescription: this.meetup.description
         }
     },
     methods: {
+        // cette méthode s'applique quand on clique sur le bouton Save
         onSaveChanges () {
-            // trim() pour enlever les espaces vides
+            // je vérifie que les champs ne sont pas vides ici trim() pour enlever les espaces vides
             if (this.editedTitle.trim() === '' || this.editedDescription.trim() === '') {
             // pour ne rien faire et continuer
             return
             }
+            // permet de fermer la fenetre qui a été ouverte par le 
+            // v-model="editDialog" du v-dialog ligne 3
             this.editDialog = false
+            // va chercher l'action du store et le place dans cet objet
+            this.$store.dispatch('updateMeetupData', {
+                // je récupère l'id que j'utilise partout
+                id: this.meetup.id,
+                title: this.editedTitle,
+                description: this.editedDescription,
+            })
         }
     }
 }
