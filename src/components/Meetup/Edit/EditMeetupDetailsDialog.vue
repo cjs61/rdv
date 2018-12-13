@@ -1,5 +1,6 @@
 <template>
-    <v-dialog width="350px" persistent>
+    <!-- mise en place d'un boléen pour ouvrir et fermer sur editDialog qui devient true avec l'activator -->
+    <v-dialog width="350px" persistent v-model="editDialog">
         <v-btn fab accent slot="activator">
             <v-icon>edit</v-icon>
         </v-btn>
@@ -36,8 +37,8 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-card-actions>
-                            <v-btn flat class="blue--text darken-1">Close</v-btn>
-                            <v-btn flat class="blue--text darken-1">Open</v-btn>
+                            <v-btn flat class="blue--text darken-1" @click="editDialog = false">Close</v-btn>
+                            <v-btn flat class="blue--text darken-1" @click="onSaveChanges">Save</v-btn>
                         </v-card-actions>
                     </v-flex>
                 </v-layout>
@@ -52,8 +53,19 @@ export default {
 
     data () {
         return {
+            editDialog: false,
             editedTitle: this.meetup.title,
             editedDescription: this.meetup.description
+        }
+    },
+    methods: {
+        onSaveChanges () {
+            // trim() pour enlever les espaces vides
+            if (this.editedTitle.trim() === '' || this.editedDescription.trim() === '') {
+            // pour ne rien faire et continuer
+            return
+            }
+            this.editDialog = false
         }
     }
 }
