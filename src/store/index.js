@@ -19,7 +19,7 @@ state : {
             date: new Date()
         }
     ],
-    // pour ne pas commmencer l'application avec une utilisateur
+    // pour ne pas commmencer l'application avec un utilisateur
     user: null,
     loading: false,
     error: null
@@ -39,6 +39,20 @@ mutations: {
     setUser(state, payload) {
         // je réécris ou set le user avec le payload
         state.user = payload
+    },
+    updateMeetup (state, payload) {
+        const meetup = state.loadedMeetups.find(meetup => {
+            return meetup.id === payload.id
+        })
+        if (payload.title) {
+            meetup.title = payload.title
+        }
+        if (payload.description) {
+            meetup.description = payload.description
+        }
+        if (payload.date) {
+            meetup.date = payload.date
+        }
     },
     setLoading(state, payload) {
         state.loading = payload
@@ -160,6 +174,30 @@ actions: {
             })
             .catch((error) => {
                 console.log(error)
+            })
+        },
+        updateMeetupData ({commit}, payload) {
+            commit('setLoading', true)
+            const updateObj = {}
+            if(payload.title) {
+                updateObj.title = payload.title
+            }
+            if(payload.description) {
+                updateObj.description = payload.description
+            }
+            if(payload.date) {
+                updateObj.date = payload.date
+            }
+            firebase.database().ref('meetups').child(payload.id).update(updateObj)
+            // cela nous donne une promesse qui nous donne accès au cas ou c'est un succès
+            .then(() => {
+                commit('setLoading', false)
+                // je réccupère l'action updateMeetup et je passe le payload qui contient les données
+                commit('updateMeetup', payload)
+            })
+            .catch (error => {
+                console.log(error)
+                commit('setLoading', false)
             })
         },
     // un objet pour extraction de la méthode commit et un payload avec password et
