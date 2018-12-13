@@ -19,7 +19,7 @@ state : {
             date: new Date()
         }
     ],
-    // pour ne pas commmencer l'application avec une utilisateur
+    // pour ne pas commmencer l'application avec un utilisateur
     user: null,
     loading: false,
     error: null

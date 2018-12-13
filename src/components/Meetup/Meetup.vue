@@ -1,36 +1,46 @@
 <template>
     <v-container>
-        <v-layout row wrap>
-            <v-flex xs 12>
-                <v-card>
-                    <v-card-title>
-                        <h4 class="primary--text">{{meetup.title}}</h4>
-                        <!-- je remets ici un template car je ne veux le montrer que s'il s'agit du 
-                        créateur de ce template spécifique donc -->
-                        <template v-if="userIsCreator">
-                            <!-- pour que le bouton soit à gauche et l'icône à droite -->
-                            <v-spacer></v-spacer>
-                            <app-edit-meetup-details-dialog></app-edit-meetup-details-dialog>
-                        </template>
-                    </v-card-title>
-                    <v-img
-                            :src="meetup.imageUrl"
-                            height="400px">
-                    </v-img>
-                    <v-card-text>
-                        <div class="info--text">{{ meetup.date | date }} - {{ meetup.location }}</div>
-                        <div>
-                         <p class="text-xs-left">{{ meetup.description }}</p> 
-                        </div>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn dark class="error">Register</v-btn>
-                    </v-card-actions>
-                </v-card>
+        <v-layout raw wrap v-if="loading">
+            <v-flex xs12 class="text-xs-center">
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    :width="7"
+                    :size="70"
+                ></v-progress-circular>
             </v-flex>
         </v-layout>
-    </v-container>
+            <v-layout row wrap v-else>
+                <v-flex xs 12>
+                    <v-card>
+                        <v-card-title>
+                            <h4 class="primary--text">{{meetup.title}}</h4>
+                            <!-- je remets ici un template car je ne veux le montrer que s'il s'agit du 
+                            créateur de ce template spécifique donc -->
+                            <template v-if="userIsCreator">
+                                <!-- pour que le bouton soit à gauche et l'icône à droite -->
+                                <v-spacer></v-spacer>
+                                <app-edit-meetup-details-dialog :meetup="meetup"></app-edit-meetup-details-dialog>
+                            </template>
+                        </v-card-title>
+                        <v-img
+                                :src="meetup.imageUrl"
+                                height="400px">
+                        </v-img>
+                        <v-card-text>
+                            <div class="info--text">{{ meetup.date | date }} - {{ meetup.location }}</div>
+                            <div>
+                            <p class="text-xs-left">{{ meetup.description }}</p> 
+                            </div>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn dark class="error">Register</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
 </template>
 <script>
 export default {
@@ -51,6 +61,9 @@ export default {
                 return false
             }
             return this.$store.getters.user.id === this.meetup.creatorId
+        },
+        loading () {
+        return this.$store.getters.loading
         }
     }
 }
