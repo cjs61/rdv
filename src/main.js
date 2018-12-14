@@ -7,6 +7,7 @@ import DateFilter from './filters/date'
 import AlertCmp from './components/Shared/Alert.vue'
 import EditMeetupDetailsDialog from './components/Meetup/Edit/EditMeetupDetailsDialog.vue'
 import EditMeetupDateDialog from './components/Meetup/Edit/EditMeetupDateDialog.vue'
+import EditMeetupTimeDialog from './components/Meetup/Edit/EditMeetupTimeDialog.vue'
 
 import 'vuetify/dist/vuetify.min.css'
 import router from './router'
@@ -24,6 +25,7 @@ Vue.component('app-alert', AlertCmp)
 //l'application (ce qui est entre parenthèse est le sélecteur) je n'oubli pas de l'importer
 Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
 Vue.component('app-edit-meetup-date-dialog', EditMeetupDateDialog)
+Vue.component('app-edit-meetup-time-dialog', EditMeetupTimeDialog)
 
 /* eslint-disable no-new */
 new Vue({

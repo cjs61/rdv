@@ -34,6 +34,10 @@
                                 :meetup="meetup"
                                 v-if="userIsCreator">
                                 </app-edit-meetup-date-dialog>
+                                <app-edit-meetup-time-dialog 
+                                :meetup="meetup"
+                                v-if="userIsCreator">
+                                </app-edit-meetup-time-dialog>
                             </div>
                             <div>
                             <p class="text-xs-left">{{ meetup.description }}</p> 
