@@ -6,6 +6,7 @@ import {store} from './store'
 import DateFilter from './filters/date'
 import AlertCmp from './components/Shared/Alert.vue'
 import EditMeetupDetailsDialog from './components/Meetup/Edit/EditMeetupDetailsDialog.vue'
+import EditMeetupDateDialog from './components/Meetup/Edit/EditMeetupDateDialog.vue'
 
 import 'vuetify/dist/vuetify.min.css'
 import router from './router'
@@ -22,6 +23,7 @@ Vue.component('app-alert', AlertCmp)
 // mais ici dans main.js il sera un composant global que je peux utiliser dans toute 
 //l'application (ce qui est entre parenthèse est le sélecteur) je n'oubli pas de l'importer
 Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
+Vue.component('app-edit-meetup-date-dialog', EditMeetupDateDialog)
 
 /* eslint-disable no-new */
 new Vue({
