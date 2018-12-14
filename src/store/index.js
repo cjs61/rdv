@@ -66,7 +66,7 @@ mutations: {
 },
 actions: {
     // comme je ne vois que les meetups que je viens de créé et pas tous ceux qui
-    // sont dans la BiquadFilterNode, je crée une action comme je veux tous les
+    // sont dans la Bdd, je crée une action comme je veux tous les
     // meetups je n'ai pas besoin d'un payload
     loadMeetups({commit}) {
         // création d'un loader le temps que les meetups soient chargés ici true puis
