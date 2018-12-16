@@ -39,19 +39,19 @@
                                 v-if="userIsCreator">
                                 </app-edit-meetup-time-dialog>
                             </div>
-                            <div>
-                            <p class="text-xs-left">{{ meetup.description }}</p> 
+                            <div class="text-xs-left">{{ meetup.description }}
                             </div>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn dark class="error">Register</v-btn>
+                            <app-meetup-register-dialog :meetupId="meetup.id"></app-meetup-register-dialog>  
                         </v-card-actions>
                     </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
 </template>
+
 <script>
 export default {
     // j'ai besoin de réccupérer l'id du meetup ; ne pas oublier d'ajouter props: true à index de router
