@@ -312,6 +312,32 @@ actions: {
             fbKeys: {}
         })
     },
+    fetchUserData ({commit, getters}) {
+        commit('setLoading', true)
+        firebase.database().ref('/users/' + getters.user.id + '/registrations/').once ('value')
+        .then(data => {
+            const dataPairs = data.val()
+            let registeredMeetups = []
+            // swapped veut dire échangé
+            let swappedPairs = {}
+            // dataPairs est une valeur que je vais utiliser dans une nouvelle clé
+            for (let key in dataPairs) { 
+                registeredMeetups.push(dataPairs[key])
+                swappedPairs[dataPairs[key]] = key
+            }
+            const updatedUser = {
+                id: getters.user.id,
+                registeredMeetups: registeredMeetups,
+                fbKeys: swappedPairs
+            }
+            commit('setLoading', false)
+            commit('setUser', updatedUser)
+        })
+        .catch(error => {
+            console.log(error)
+            commit('setLoading', false)
+        })
+    },
     logout({commit}) {
         firebase
             .auth()
