@@ -25,6 +25,19 @@ state : {
     error: null
 },
 mutations: {
+    registerUserForMeetup (state, payload) {
+        const id = payload.id
+        if(state.user.registeredMeetups.findIndex(meetup => meetup.id === id) >=0) {
+            return
+        }
+        state.user.registeredMeetups.push(id)
+        state.user.fbKeys[id] = payload.fbKey
+    },
+    unregisterUserFromMeetup (state, payload) {
+        const registeredMeetups = state.user.registeredMeetups
+        registeredMeetups.splice(registeredMeetups.findIndex(meetup => meetup.id === payload), 1)
+        Reflect.deleteProperty(state.user.fbKeys, payload)
+    },
     setLoadedMeetups(state, payload) {
         // loadedMeetups était le tableau que j'avais fais en dur et accédé au tableau
         // que j'ai créé et récupéré (le payload)
@@ -64,7 +77,40 @@ mutations: {
         state.error = null
     }
 },
+
 actions: {
+    registerUserForMeetup ({commit, getters}, payload) {
+        commit('setLoading', true)
+        const user = getters.user
+        firebase.database().ref('/users/' + user.id).child('/registrations/')
+        .push(payload)
+        .then(data => {
+            commit('setLoading', false)
+            commit('registerUserForMeetup', {id: payload, fbKey: data.key})
+        })
+        .catch(error => {
+            console.log(error)
+            commit('setLoading', false)
+        })
+    },
+    unregisterUserFromMeetup ({commit, getters}, payload) {
+        commit('setLoading', true)
+        const user = getters.user
+        if(!user.fbKeys) {
+            return
+        }
+        const fbKey = user.fbKeys[payload]
+        firebase.database().ref('/users/' + user.id + '/registrations/').child(fbKey)
+        .remove()
+        .then(() => {
+            commit('setLoading', false)
+            commit('unregisterUserFromMeetup', payload)
+        })
+        .catch(error => {
+            console.log(error)
+            commit('setLoading', false)
+        })
+    },
     // comme je ne vois que les meetups que je viens de créé et pas tous ceux qui
     // sont dans la Bdd, je crée une action comme je veux tous les
     // meetups je n'ai pas besoin d'un payload
@@ -100,8 +146,8 @@ actions: {
                         creatorId: obj[key].creatorId
                     })
                 }
-                commit('setLoading', false)
                 commit('setLoadedMeetups', meetups)
+                commit('setLoading', false)
             })
             .catch((error) => {
                 console.log(error)
@@ -219,7 +265,10 @@ actions: {
                     // nouvel utilisateur avec un id unique
                     const newUser = {
                         id: user.uid,
-                        registeredMeetups: []
+                        registeredMeetups: [],
+                        // j'ajoute cette clé pour chaque utilisateur de même dans signUserIn et autoSignIn
+                        // afin de pourvoir s'enregistrer à un meetup en initialisant la clé firebase
+                        fbKeys: {}
                     }
                     commit('setUser', newUser)
                 }
@@ -243,7 +292,8 @@ actions: {
                 commit('setLoading', false)
                 const newUser = {
                     id: user.uid,
-                    registeredMeetups: []
+                    registeredMeetups: [],
+                    fbKeys: {}
                 }
                 commit('setUser', newUser)
             })
@@ -258,7 +308,34 @@ actions: {
     }, payload) {
         commit('setUser', {
             id: payload.uid,
-            registeredMeetups: []
+            registeredMeetups: [],
+            fbKeys: {}
+        })
+    },
+    fetchUserData ({commit, getters}) {
+        commit('setLoading', true)
+        firebase.database().ref('/users/' + getters.user.id + '/registrations/').once ('value')
+        .then(data => {
+            const dataPairs = data.val()
+            let registeredMeetups = []
+            // swapped veut dire échangé
+            let swappedPairs = {}
+            // dataPairs est une valeur que je vais utiliser dans une nouvelle clé
+            for (let key in dataPairs) { 
+                registeredMeetups.push(dataPairs[key])
+                swappedPairs[dataPairs[key]] = key
+            }
+            const updatedUser = {
+                id: getters.user.id,
+                registeredMeetups: registeredMeetups,
+                fbKeys: swappedPairs
+            }
+            commit('setLoading', false)
+            commit('setUser', updatedUser)
+        })
+        .catch(error => {
+            console.log(error)
+            commit('setLoading', false)
         })
     },
     logout({commit}) {
