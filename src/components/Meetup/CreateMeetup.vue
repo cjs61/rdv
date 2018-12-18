@@ -31,7 +31,7 @@
 
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+              <v-btn raised class="info" @click="onPickFile">Upload Image</v-btn>
              <input 
              type="file" 
              style="display: none" 
@@ -70,15 +70,16 @@
           
           <v-layout row class="mb-2">
             <v-flex xs12 sm6 offset-sm3>
-              <v-date-picker v-model="date"></v-date-picker>
+              <v-date-picker v-model="date" color="info"></v-date-picker>
             </v-flex>
           </v-layout>
           
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-      <v-time-picker v-model="time" format="24hr" actions></v-time-picker>
+      <v-time-picker v-model="time" format="24hr" color="info" actions></v-time-picker>
             </v-flex>
           </v-layout>
+          <br/>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-btn
@@ -87,7 +88,7 @@
                 type="submit">Create Meetup</v-btn>
             </v-flex>
           </v-layout>
-          </div>
+          
         </form>
       </v-flex>
     </v-layout>

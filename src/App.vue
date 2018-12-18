@@ -27,7 +27,7 @@
     </v-navigation-drawer>
 
     <!-- dark permet de passer le texte en blanc pour qu'il soit plus lisible -->
-    <v-toolbar app :clipped-left="clipped" dark="dark" class="error">
+    <v-toolbar app :clipped-left="clipped" dark="dark" class="primary">
         <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-toolbar-side-icon>
         <v-toolbar-title>
             <router-link to="/" tag="span" style="cursor: pointer">DevMeetup
@@ -57,7 +57,7 @@
             </v-layout>
         </v-container>
     </v-content>
-    <v-footer :fixed="fixed" color="error" app>
+    <v-footer :fixed="fixed" color="primary" app>
         <span class="white--text">&copy; 2018</span>
     </v-footer>
 </v-app>
